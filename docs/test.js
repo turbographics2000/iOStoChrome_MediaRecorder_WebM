@@ -2,6 +2,7 @@ const apiKey = '96290d86-2e8a-490a-9e26-1be00036e7d6';
 
 const peer = new Peer({key: apiKey});
 let mr = null;
+let recURL = null;
 
 peer.on('open', _ => {
   dispMyId.textContent = peer.id; 
@@ -38,13 +39,16 @@ btnRecord.onclick = function() {
   mr.ondataavailable = function(evt) {
     btnRecord.textContent = '録画';
     mr.stop();
+    recURL = URL.createObjectURL(new Blob([evt.data], 'video/webm'));
+  };
+  mr.onstop = function(evt) {
     mr = null;
     document.querySelectorAll('.download').forEach(elm => elm.remove());
     const download = document.createElement('a');
-    download.href = URL.createObjectURL(evt.data);
+    download.href = recURL;
     download.classList.add('download');
     download.textContent = '録画ダウンロード';
     document.body.appendChild(download);
-    recPreview.srcObject = evt.data;
-  };
+    recPreview.src = recURL;
+  }
 }
