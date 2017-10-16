@@ -6,7 +6,7 @@ let recURL = null;
 
 peer.on('open', _ => {
   dispMyId.textContent = peer.id;
-  Peer.listAllPeers(peers => {
+  peer.listAllPeers(peers => {
     peers.forEach(remoteId => {
       if(remoteId !== peer.id) {
         txtConnectId.value = remoteId;
