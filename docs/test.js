@@ -54,7 +54,7 @@ btnRecord.onclick = function () {
       const a = document.createElement('a');
       document.body.appendChild(a);
       a.style = 'display: none';
-      a.href = url;
+      a.href = recURL;
       a.download = 'test.webm';
       a.click();
       URL.revokeObjectURL(recURL);
