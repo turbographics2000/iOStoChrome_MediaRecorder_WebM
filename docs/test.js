@@ -42,7 +42,7 @@ btnRecord.onclick = function () {
   mr = new MediaRecorder(remotePreview.srcObject, {
     mimeType: 'video/webm; codecs=vp8'
   });
-  mr.start(10000);
+  mr.start(3000);
   mr.ondataavailable = function (evt) {
     console.log('ondataavailable');
     btnRecord.textContent = '録画';
