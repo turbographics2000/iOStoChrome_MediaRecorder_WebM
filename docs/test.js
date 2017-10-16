@@ -38,12 +38,10 @@ btnConnect.onclick = function () {
 btnRecord.onclick = function () {
   if (btnRecord.textContent === '録画') {
     btnRecord.textContent = '録画中';
-    btnRecord.disabled = true;
     recChunks = [];
     mr = new MediaRecorder(remotePreview.srcObject, {
       mimeType: 'video/webm; codecs=vp8'
     });
-    mr.start();
     mr.ondataavailable = function (evt) {
       console.log('ondataavailable');
       recChunks.push(evt.data);
@@ -58,9 +56,9 @@ btnRecord.onclick = function () {
       download.textContent = '録画ダウンロード';
       document.body.appendChild(download);
     }
+    mr.start();
   } else {
     mr.stop();
     btnRecord.textContent = '録画';
-    btnRecord.disabled = false;
   }
 }
