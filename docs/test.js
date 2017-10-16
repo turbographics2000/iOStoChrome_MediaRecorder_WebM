@@ -49,13 +49,18 @@ btnRecord.onclick = function () {
     };
     mr.onstop = function (evt) {
       mr = null;
-      const recURL = URL.createObjectURL(new Blob(recChunks, { type: 'video/webm' }));
+      const recURL = URL.createObjectURL(new Blob(recChunks));
       document.querySelectorAll('.download').forEach(elm => elm.remove());
-      const download = document.createElement('a');
-      recPreview.src = download.href = recURL;
-      download.classList.add('download');
-      download.textContent = '録画ダウンロード';
-      document.body.appendChild(download);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.style = 'display: none';
+      a.href = url;
+      a.download = 'test.webm';
+      a.click();
+      URL.revokeObjectURL(recURL);
+      setTimeout(_ => {
+        a.remove();
+      });
     }
     mr.start();
   } else {
