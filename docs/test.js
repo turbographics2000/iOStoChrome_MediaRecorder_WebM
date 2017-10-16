@@ -61,7 +61,7 @@ btnRecord.onclick = function () {
       }, 0);
     }
     setTimeout(_ => {
-      mr.start();
+      mr.start(1000);
     }, 0);
   } else {
     mr.stop();
