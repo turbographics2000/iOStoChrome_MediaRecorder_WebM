@@ -4,8 +4,15 @@ const peer = new Peer({key: apiKey});
 peer.on('open', _ => {
   dispMyId.textContent = peer.id; 
 });  
-peer.on('call', stream => {
-  remotePreview.srcObject = stream;
+peer.on('call', call => {
+  call.on('stream', stream => {
+    remotePreview.srcObject = stream;
+  });
+  navigator.mediaDevices.getUserMedia({video:true}).then(stream => {
+    call.answer(stream);
+  }).catch(e => {
+    console.log('answer error');
+  });
 });
 
 btnConnect.onclick = function() {
