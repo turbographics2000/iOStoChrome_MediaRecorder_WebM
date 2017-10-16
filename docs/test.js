@@ -59,7 +59,9 @@ btnRecord.onclick = function () {
         a.remove();
       });
     }
-    mr.start();
+    setTimeout(_ => {
+      mr.start();
+    });
   } else {
     mr.stop();
     btnRecord.textContent = '録画';
