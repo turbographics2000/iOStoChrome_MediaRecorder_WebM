@@ -1,6 +1,8 @@
 const apiKey = '96290d86-2e8a-490a-9e26-1be00036e7d6';
 
 const peer = new Peer({key: apiKey});
+let mr = null;
+
 peer.on('open', _ => {
   dispMyId.textContent = peer.id; 
 });  
@@ -29,7 +31,7 @@ btnConnect.onclick = function() {
 btnRecord.onclick = function() {
   btnRecord.textContent = '録画中';
   btnRecord.disabled = true;
-  let mr = new MediaRecorder(remotePreview.srcObject, {
+  mr = new MediaRecorder(remotePreview.srcObject, {
     mimeType: 'video/webm; codecs=vp8'
   });
   mr.start(10000);
