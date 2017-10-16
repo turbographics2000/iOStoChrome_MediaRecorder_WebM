@@ -45,6 +45,6 @@ btnRecord.onclick = function() {
     download.classList.add('download');
     download.textContent = '録画ダウンロード';
     document.body.appendChild(download);
-    recPreview.srcObject = evt;
+    recPreview.srcObject = evt.data;
   };
 }
