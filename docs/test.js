@@ -37,14 +37,15 @@ btnConnect.onclick = function () {
 };
 btnRecord.onclick = function () {
   if (btnRecord.textContent === '録画') {
-    btnRecord.textContent = '録画中';
+    btnRecord.textContent = '停止';
     recChunks = [];
     mr = new MediaRecorder(remotePreview.srcObject, {
       mimeType: 'video/webm; codecs=vp8'
     });
     mr.ondataavailable = function (evt) {
-      console.log('ondataavailable');
-      recChunks.push(evt.data);
+      if (evt.data.size > 0) {
+        recChunks.push(evt.data);
+      }
     };
     mr.onstop = function (evt) {
       mr = null;
