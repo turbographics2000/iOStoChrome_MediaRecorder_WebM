@@ -1,6 +1,5 @@
 const apiKey = '96290d86-2e8a-490a-9e26-1be00036e7d6';
 const peer = new Peer({ key: apiKey });
-let mr = null;
 let recChunks = null;
 
 peer.on('open', _ => {
@@ -39,7 +38,7 @@ btnRecord.onclick = function () {
   if (btnRecord.textContent === '録画') {
     btnRecord.textContent = '停止';
     recChunks = [];
-    mr = new MediaRecorder(remotePreview.srcObject);
+    var mr = new MediaRecorder(remotePreview.srcObject);
     mr.ondataavailable = function (evt) {
       if (evt.data.size > 0) {
         recChunks.push(evt.data);
