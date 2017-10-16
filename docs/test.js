@@ -6,6 +6,13 @@ let recURL = null;
 
 peer.on('open', _ => {
   dispMyId.textContent = peer.id;
+  Peer.listAllPeers.listAllPeers(peers => {
+    peers.forEach(remoteId => {
+      if(remoteId !== peer.id) {
+        txtConnectId.value = remoteId;
+      }
+    })
+  });
 });
 peer.on('call', call => {
   call.on('stream', stream => {
