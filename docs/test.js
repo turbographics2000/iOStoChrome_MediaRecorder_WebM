@@ -20,7 +20,7 @@ btnConnect.onclick = function() {
   navigator.mediaDevices.getUserMedia({video:true}).then(stream => {
     const call = peer.call(txtConnectId.value.trim(), stream);
     call.on('stream', remoteStream => {
-      remoteView.srcObject = remoteStream;
+      remotePreview.srcObject = remoteStream;
     })
   }).catch(e => {
     console.log('gum error', e);
