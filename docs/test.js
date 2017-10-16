@@ -1,17 +1,16 @@
 const apiKey = '96290d86-2e8a-490a-9e26-1be00036e7d6';
-
 const peer = new Peer({ key: apiKey });
 let mr = null;
-let recURL = null;
+let recChunks = null;
 
 peer.on('open', _ => {
   dispMyId.textContent = peer.id;
   peer.listAllPeers(peers => {
     peers.forEach(remoteId => {
-      if(remoteId !== peer.id) {
+      if (remoteId !== peer.id) {
         txtConnectId.value = remoteId;
       }
-    })
+    });
   });
 });
 peer.on('call', call => {
@@ -37,26 +36,31 @@ btnConnect.onclick = function () {
   });
 };
 btnRecord.onclick = function () {
-  btnRecord.textContent = '録画中';
-  btnRecord.disabled = true;
-  mr = new MediaRecorder(remotePreview.srcObject, {
-    mimeType: 'video/webm; codecs=vp8'
-  });
-  mr.start(3000);
-  mr.ondataavailable = function (evt) {
-    console.log('ondataavailable');
-    btnRecord.textContent = '録画';
+  if (btnRecord.textContent === '録画') {
+    btnRecord.textContent = '録画中';
+    btnRecord.disabled = true;
+    recChunks = [];
+    mr = new MediaRecorder(remotePreview.srcObject, {
+      mimeType: 'video/webm; codecs=vp8'
+    });
+    mr.start();
+    mr.ondataavailable = function (evt) {
+      console.log('ondataavailable');
+      recChunks.push(evt.data);
+    };
+    mr.onstop = function (evt) {
+      mr = null;
+      const recURL = URL.createObjectURL(new Blob(recChunks, { type: 'video/webm' }));
+      document.querySelectorAll('.download').forEach(elm => elm.remove());
+      const download = document.createElement('a');
+      recPreview.src = download.href = recURL;
+      download.classList.add('download');
+      download.textContent = '録画ダウンロード';
+      document.body.appendChild(download);
+    }
+  } else {
     mr.stop();
-    recURL = URL.createObjectURL(new Blob([evt.data], { type: 'video/webm' }));
-  };
-  mr.onstop = function (evt) {
-    mr = null;
-    document.querySelectorAll('.download').forEach(elm => elm.remove());
-    const download = document.createElement('a');
-    download.href = recURL;
-    download.classList.add('download');
-    download.textContent = '録画ダウンロード';
-    document.body.appendChild(download);
-    recPreview.src = recURL;
+    btnRecord.textContent = '録画';
+    btnRecord.disabled = false;
   }
 }
