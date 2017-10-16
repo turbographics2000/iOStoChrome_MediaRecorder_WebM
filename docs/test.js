@@ -40,7 +40,7 @@ btnRecord.onclick = function () {
     btnRecord.textContent = '停止';
     recChunks = [];
     mr = new MediaRecorder(remotePreview.srcObject, {
-      mimeType: 'video/webm; codecs=vp8'
+      mimeType: 'video/webm; codecs=h264'
     });
     mr.ondataavailable = function (evt) {
       if (evt.data.size > 0) {
