@@ -2,7 +2,7 @@ const apiKey = '96290d86-2e8a-490a-9e26-1be00036e7d6';
 const peer = new Peer({ key: apiKey });
 let mr = null;
 let recChunks = null;
-
+let remoteStream = null;
 peer.on('open', _ => {
   dispMyId.textContent = peer.id;
   peer.listAllPeers(peers => {
@@ -28,7 +28,8 @@ btnConnect.onclick = function () {
   if (!txtConnectId.value.trim()) return;
   navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
     const call = peer.call(txtConnectId.value.trim(), stream);
-    call.on('stream', remoteStream => {
+    call.on('stream', rStream => {
+      remoteStream = rStream;
       remotePreview.srcObject = remoteStream;
     })
   }).catch(e => {
@@ -39,7 +40,7 @@ btnRecord.onclick = function () {
   if (btnRecord.textContent === '録画') {
     btnRecord.textContent = '停止';
     recChunks = [];
-    mr = new MediaRecorder(remotePreview.srcObject);
+    mr = new MediaRecorder(rStream);
     mr.ondataavailable = function (evt) {
       recChunks.push(evt.data);
     };
