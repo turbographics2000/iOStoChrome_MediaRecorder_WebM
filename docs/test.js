@@ -1,6 +1,6 @@
 const apiKey = '96290d86-2e8a-490a-9e26-1be00036e7d6';
 const peer = new Peer({ key: apiKey });
-var mr = null;
+let mr = null;
 let recChunks = null;
 
 peer.on('open', _ => {
@@ -59,7 +59,7 @@ btnRecord.onclick = function () {
       }, 0);
     }
     setTimeout(_ => {
-      mr.start();
+      mr.start(0);
     }, 0);
   } else {
     mr.stop();
