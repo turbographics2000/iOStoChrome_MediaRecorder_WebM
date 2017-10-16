@@ -41,9 +41,7 @@ btnRecord.onclick = function () {
     recChunks = [];
     mr = new MediaRecorder(remotePreview.srcObject);
     mr.ondataavailable = function (evt) {
-      if (evt.data.size > 0) {
-        recChunks.push(evt.data);
-      }
+      recChunks.push(evt.data);
     };
     mr.onstop = function (evt) {
       mr = null;
