@@ -44,6 +44,7 @@ btnRecord.onclick = function () {
   });
   mr.start(10000);
   mr.ondataavailable = function (evt) {
+    console.log('ondataavailable');
     btnRecord.textContent = '録画';
     mr.stop();
     recURL = URL.createObjectURL(new Blob([evt.data], { type: 'video/webm' }));
