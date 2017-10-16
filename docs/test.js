@@ -42,6 +42,7 @@ btnRecord.onclick = function() {
     document.querySelectorAll('.download').forEach(elm => elm.remove());
     const download = document.createElement('a');
     download.href = URL.createObjectURL(evt.data);
+    download.classList.add('download');
     download.textContent = '録画ダウンロード';
     document.body.appendChild(download);
     recPreview.srcObject = evt;
