@@ -57,11 +57,11 @@ btnRecord.onclick = function () {
       URL.revokeObjectURL(recURL);
       setTimeout(_ => {
         a.remove();
-      });
+      }, 0);
     }
     setTimeout(_ => {
       mr.start();
-    });
+    }, 0);
   } else {
     mr.stop();
     btnRecord.textContent = '録画';
