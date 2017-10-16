@@ -39,7 +39,7 @@ btnRecord.onclick = function () {
   if (btnRecord.textContent === '録画') {
     btnRecord.textContent = '停止';
     recChunks = [];
-    mr = new MediaRecorder();
+    mr = new MediaRecorder(remotePreview.srcObject);
     mr.ondataavailable = function (evt) {
       if (evt.data.size > 0) {
         recChunks.push(evt.data);
